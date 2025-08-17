@@ -1,0 +1,7 @@
+{
+    "files.exclude":{
+            "**/*.class": true
+    },
+    "java.debug.settings.onBuildFailureProceed": true,
+
+}
