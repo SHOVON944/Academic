@@ -1,0 +1,19 @@
+package Multi_Catch_Block;
+
+public class Basic {
+   public static void main(String[] args) {
+      System.out.println();
+      System.out.println();
+      try {
+         int a[] = new int[5];
+         a[5] = 30 / 0;
+      } catch (ArithmeticException e) {
+         System.out.println("Arithmetic Exception occurs");
+      } catch (ArrayIndexOutOfBoundsException e) {
+         System.out.println("ArrayIndexOutOfBounds Exception occurs");
+      } catch (Exception e) {
+         System.out.println("Parent Exception occurs");
+      }
+      System.out.println("rest of the code");
+   }
+}
