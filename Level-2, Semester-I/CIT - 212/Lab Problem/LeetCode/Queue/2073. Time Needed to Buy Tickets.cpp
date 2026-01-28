@@ -1,6 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+
 class Node{
 public:
     int data;
@@ -43,6 +44,7 @@ public:
             head = head->next;
             delete temp;
         }
+        count--;
     }
 
     int front(){
@@ -77,12 +79,14 @@ public:
             q.pop();
             val--;
             time++;
-            if(check_position==0){
-                if(val==0) break;
-                else check_position = q.size();
-            }
             if(val>0){
                 q.push(val);
+            }
+            if(check_position==0){
+                if(val==0) break;
+                else check_position = q.size() - 1;
+            } else{
+                check_position--;
             }
         }
         return time;
