@@ -57,10 +57,6 @@ public:
         frontNode = rearNode = NULL;
     }
 
-    bool empty(){
-        return frontNode == NULL;
-    }
-
     void push(int val){
         Node* newNode = new Node(val);
 
@@ -84,9 +80,13 @@ public:
         }
     }
 
-    int front() {
+    int front(){
         if (empty()) return -1;
         return frontNode->data;
+    }
+
+    bool empty(){
+        return frontNode == NULL;
     }
 };
 
