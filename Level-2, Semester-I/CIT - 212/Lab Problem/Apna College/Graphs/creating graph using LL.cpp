@@ -71,7 +71,8 @@ public:
 };
 
 /* ---------- Main ---------- */
-int main() {
+int main()
+{
     Graph g(5);
 
     g.addEdge(0, 1);
