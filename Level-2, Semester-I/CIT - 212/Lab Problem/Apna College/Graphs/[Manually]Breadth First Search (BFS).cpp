@@ -81,7 +81,7 @@ public:
     }
 
     int front(){
-        if (empty()) return -1;
+        if(empty()) return -1;
         return frontNode->data;
     }
 
@@ -91,28 +91,29 @@ public:
 };
 
 /* ---------- Graph ---------- */
-class Graph {
+class Graph{
     int V;
     List* adj;        // adjacency list
     bool* visited;   // visited array
 
 public:
-    Graph(int V) {
+    Graph(int V){
         this->V = V;
-        adj = new List[V];
-        visited = new bool[V];
+        adj = new List[V];      // creating empty list for each vertex
+        visited = new bool[V];  // creating visited array
 
-        for (int i = 0; i < V; i++)
-            visited[i] = false;
+        for(int i = 0; i < V; i++){
+            visited[i] = false; // In first, all vertex unvisited
+        }
     }
 
     // undirected graph
-    void addEdge(int u, int v) {
+    void addEdge(int u, int v){
         adj[u].push_back(v);
         adj[v].push_back(u);
     }
 
-    void printAdjList() {
+    void printAdjList(){
         for (int i = 0; i < V; i++) {
             cout << i << ": ";
             adj[i].print();
