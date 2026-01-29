@@ -3,6 +3,7 @@ using namespace std;
 
 int main()
 {
+
     int N;
     cout<<"Enter number of elements: ";
     cin>>N;
@@ -12,22 +13,19 @@ int main()
         cin>>DATA[i];
     }
 
-    int ITEM;
-    cin>>ITEM;
-
     int K = 1;
-    int LOC = 0;
-    while(LOC==0   &&   K<=N){
-        if(ITEM == DATA[K]){
+    int LOC = 1;
+    int MAX = DATA[1];
+    do{
+        if(MAX<DATA[K]){
+            MAX = DATA[K];
             LOC = K;
         }
         K = K + 1;
-    }
-    if(LOC==0){
-        cout<<ITEM<<" is not in DATA "<<endl;
-    } else{
-        cout<<LOC<<" is the location of "<<ITEM<<endl;
-    }
+    } while(K <= N);
+
+    cout<<"Largest element location= "<<LOC<<endl;
+    cout<<"Largest element = "<<MAX<<endl;
 
     return 0;
 }

@@ -24,9 +24,9 @@ int main()
         K = K + 1;
     }
     if(LOC==0){
-        cout<<ITEM<<" is not in DATA "<<endl;
+        cout<<ITEM<<" is not in DATA"<<endl;
     } else{
-        cout<<LOC<<" is the location of "<<ITEM<<endl;
+        cout<<LOC<<"is the location of"<<ITEM<<endl;
     }
 
     return 0;
