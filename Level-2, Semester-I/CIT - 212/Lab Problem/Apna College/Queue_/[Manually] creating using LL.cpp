@@ -12,17 +12,19 @@ public:
     }
 };
 
-class Queue{     // not access modifier declire. Means, it is private class
+class QueUe{
     Node* head;
     Node* tail;
+    int count;
 
 public:
-    Queue(){
+    QueUe(){
         head = tail = NULL;
+        count = 0;
     }
 
     void push(int val){
-        Node* newNode = new Node(val);      // dynamic
+        Node* newNode = new Node(val);
 
         if(empty()){
             head = tail = newNode;
@@ -30,37 +32,41 @@ public:
             tail->next = newNode;
             tail = newNode;
         }
+        count++;
     }
 
     void pop(){
         if(empty()){
-            cout<<"LL is empty"<<endl;
             return;
         } else{
             Node* temp = head;
             head = head->next;
             delete temp;
         }
+        count--;
     }
 
     int front(){
         if(empty()){
-            cout<<"LL is empty"<<endl;
             return -1;
         }
+
         return head->data;
+    }
+
+    int size(){
+        return count;
     }
 
     bool empty(){
         return head==NULL;
     }
-
 };
 
 
 int main()
 {
-    Queue q;
+    QueUe q;
     q.push(1);
     q.push(2);
     q.push(3);
