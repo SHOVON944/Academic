@@ -2,7 +2,7 @@
 using namespace std;
 
 /* ---------- Node ---------- */
-class Node {
+class Node{
 public:
     int data;
     Node* next;
@@ -14,73 +14,74 @@ public:
 };
 
 /* ---------- Linked List ---------- */
-class List {
+class List{
     Node* head;
     Node* tail;
 
 public:
-    List() {
+    List(){
         head = tail = NULL;
     }
 
-    void push_back(int val) {
+    void push_back(int val){
         Node* newNode = new Node(val);
 
-        if (head == NULL) {
+        if(head == NULL){
             head = tail = newNode;
-        } else {
+        } else{
             tail->next = newNode;
             tail = newNode;
         }
     }
 
-    Node* getHead() {
+    Node* getHead(){
         return head;
     }
 
-    void print() {
+    void print(){
         Node* temp = head;
-        while (temp != NULL) {
-            cout << temp->data << " ";
+        while(temp != NULL){
+            cout<<temp->data<<" ";
             temp = temp->next;
         }
     }
 };
 
 /* ---------- Queue (using Linked List) ---------- */
-class Queue {
+class Queue{
     Node* frontNode;
     Node* rearNode;
 
 public:
-    Queue() {
+    Queue(){
         frontNode = rearNode = NULL;
     }
 
-    bool empty() {
+    bool empty(){
         return frontNode == NULL;
     }
 
-    void push(int val) {
+    void push(int val){
         Node* newNode = new Node(val);
 
-        if (empty()) {
+        if(empty()){
             frontNode = rearNode = newNode;
-        } else {
+        } else{
             rearNode->next = newNode;
             rearNode = newNode;
         }
     }
 
-    void pop() {
-        if (empty()) return;
+    void pop(){
+        if(empty()) return;
 
         Node* temp = frontNode;
         frontNode = frontNode->next;
         delete temp;
 
-        if (frontNode == NULL)
+        if(frontNode == NULL){
             rearNode = NULL;
+        }
     }
 
     int front() {
