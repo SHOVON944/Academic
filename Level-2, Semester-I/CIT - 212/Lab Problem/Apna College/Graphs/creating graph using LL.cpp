@@ -64,7 +64,7 @@ public:
     void printAdjList() {
         for (int i = 0; i < V; i++) {
             cout << i << ": ";
-            adj[i].print();
+            adj[i].print();     //* adj[i].print() == print(&adj[i]), compliner er vitore emonvabe run hoi. print() function ta adj[i] obj er jnno colbe
             cout << endl;
         }
     }
