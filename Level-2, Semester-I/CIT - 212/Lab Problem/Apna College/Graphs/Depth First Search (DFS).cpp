@@ -73,8 +73,7 @@ public:
         DFS_Helper(src, visit);
         cout<<endl;
 /*
-! if any one or more edge are not connected than we should call multiple source in diff diff components in BFS/ DFS
-thle uporer DF_Helper(src, visit); and cout<<endl; bad dia nicer ei code ta likhbo
+! if any one or more edge are not connected than we should call multiple source in diff diff components in BFS/ DFS thle uporer DF_Helper(src, visit); and cout<<endl; bad dia nicer ei code ta likhbo
 *   for(int i=0; i<V; i++){
 *       if(!visit[i]){
 *         DFS_Helper(i, visit);
@@ -99,6 +98,6 @@ int main()
     g.BFS();
     cout<<endl<<"DFS: ";
     g.DFS();        //! TC: O(V+E)      [V-> vertex, E-> Edge]
-
+    //user input er somoi head value pass hobe eikhan theke
     return 0;
 }

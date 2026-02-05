@@ -1,19 +1,19 @@
 #include <iostream>
 using namespace std;
 
-/* ---------- Node ---------- */
+//---- Node
 class Node{
 public:
     int data;
     Node* next;
 
-    Node(int val) {
+    Node(int val){
         data = val;
         next = NULL;
     }
 };
 
-/* ---------- Linked List ---------- */
+//---- Linked List
 class List{
     Node* head;
     Node* tail;
@@ -135,81 +135,70 @@ public:
     }
 };
 
-/* ---------- Graph ---------- */
+//---Graph
 class Graph{
     int V;
     List* adj;        // adjacency list
-    bool* visited;   // visited array
 
 public:
     Graph(int V){
         this->V = V;
-        adj = new List[V];      // creating empty list for each vertex
-        visited = new bool[V];  // creating visited array
-
-        for(int i = 0; i < V; i++){
-            visited[i] = false; // In first, all vertex unvisited
-        }
+        adj = new List[V];
     }
 
-    // undirected graph
     void addEdge(int u, int v){
         adj[u].push_back(v);
         adj[v].push_back(u);
     }
 
-    void printAdjList(){
-        for (int i = 0; i < V; i++) {
-            cout << i << ": ";
-            adj[i].print();
-            cout << endl;
-        }
-    }
+    //----DFS Helper
+    void DFS_Helper(int u, bool* visit){
+        cout<<u<<" ";
+        visit[u] = true;
 
-    // BFS Traversal
-    void BFS(int src){
-    for(int i =0; i<V; i++){
-        visited[i] = false;
-    }
-        Queue q;
-
-        q.push(src);
-        visited[src] = true;
-
-        while(!q.empty()){
-            int u = q.front();
-            q.pop();
-
-            cout<<u<<" ";
-
-            Node* temp = adj[u].getHead();
-            while(temp != NULL){
-                int v = temp->data;
-                if(!visited[v]){
-                    visited[v] = true;
-                    q.push(v);
-                }
-                temp = temp->next;
+        Node* temp = adj[u].getHead();
+        while(temp != NULL){
+            int v = temp->data;
+            if(!visit[v]){
+                DFS_Helper(v, visit);
             }
+            temp = temp->next;
         }
+    }
+
+//    DFS
+    //! TC: O(V + E)
+    void DFS(int src){
+        bool* visit = new bool[V];
+
+        for(int i=0; i<V; i++)
+            visit[i] = false;
+
+        DFS_Helper(src, visit);
+        cout<<endl;
+/*
+! if any one or more edge are not connected than we should call multiple source in diff diff components in BFS/ DFS thle uporer DF_Helper(src, visit); and cout<<endl; bad dia nicer ei code ta likhbo
+*   for(int i=0; i<V; i++){
+*       if(!visit[i]){
+*         DFS_Helper(i, visit);
+*        }
+    }
+*/
+        // delete[] visit;
     }
 };
 
-/* ---------- Main ---------- */
-int main(){
+int main()
+{
     Graph g(5);
 
     g.addEdge(0, 1);
     g.addEdge(1, 2);
     g.addEdge(1, 3);
-    g.addEdge(2, 3);
     g.addEdge(2, 4);
 
-    cout<<"Adjacency List: ";
-    g.printAdjList();
-
-    cout<<"\nBFS Traversal: ";
-    g.BFS(0);   // user input er somoi head value pass hobe eikhan theke
+    cout<<"DFS: ";
+    g.DFS(0);
 
     return 0;
 }
