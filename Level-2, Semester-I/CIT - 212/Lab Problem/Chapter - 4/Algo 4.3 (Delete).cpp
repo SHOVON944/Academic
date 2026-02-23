@@ -13,6 +13,14 @@
 #include <iostream>
 using namespace std;
 
+void DELETE(int LA[], int &N, int K, int &ITEM){
+    ITEM = LA[K];
+    for (int J=K; J<=N-1;J++){
+        LA[J] = LA[J + 1];
+    }
+    N = N - 1;
+}
+
 int main()
 {
     int LA[100];
@@ -21,12 +29,7 @@ int main()
     for(int i=1; i<=N; i++) cin >> LA[i];
 
     cin >> K;
-    ITEM = LA[K];
-    for (int J=K; J<=N-1;J++){
-        LA[J] = LA[J + 1];
-    }
-
-    N = N - 1;
+    DELETE(LA, N, K, ITEM);
     cout<<ITEM<<endl;
     for(int i=1; i<=N;i++){
         cout<<LA[i]<<" ";

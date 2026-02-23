@@ -14,17 +14,8 @@
 #include <iostream>
 using namespace std;
 
-int main()
-{
-    int LA[100];
-    int N, K, ITEM;
-    int J;
-    cin>>N;
-    for(int i = 1; i <= N; i++) cin>>LA[i];
-
-    cin>>K;
-    cin>>ITEM;
-    J = N;
+void INSERT(int LA[], int &N, int K, int ITEM){
+    int J = N;
     while(J>=K){
         LA[J + 1] = LA[J];
         J = J - 1;
@@ -32,6 +23,20 @@ int main()
 
     LA[K] = ITEM;
     N = N + 1;
+}
+
+int main()
+{
+    int LA[100];
+    int N, K, ITEM;
+
+    cin>>N;
+    for(int i = 1; i <= N; i++) cin>>LA[i];
+
+    cin>>K;
+    cin>>ITEM;
+
+    INSERT(LA, N, K, ITEM);
 
     for(int i = 1; i <= N; i++){
         cout<<LA[i]<<" ";
