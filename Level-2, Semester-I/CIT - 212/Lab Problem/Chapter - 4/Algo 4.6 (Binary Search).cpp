@@ -1,4 +1,5 @@
 /*
+Algorithm 4.6:
 (Binary Search)BINARY(DATA, LB, UB, ITEM, LOC)
 Here DATA is a sorted array with lower bound LB and upper bound UB, and ITEM is a given item of information. The variables BEG, END and MID denote, respectively, the beginning, end and middle locations of a segment of elements of DATA. This algorithm finds the location LOC of ITEM in DATA or sets LOC=NULLLOC=NULL.
 1.	[Initialize segment variables.]
