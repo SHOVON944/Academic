@@ -1,7 +1,11 @@
 /*
-Algorithm 4.1: (Traversing a Linear Array) This algorithm traverses a linear array LA with lower bound LB and upper bound UB.
-1.	Repeat for K = LB to UB: Apply PROCESS to LA[K]. [End of loop.]
-2.	Exit.
+Algorithm 4.1: Traversing a Linear Array) Here LA is a linear array with lower bound LB and upper bound UB. This algorithm traverses LA applying an operation PROCESS to each element of LA.
+1. [Initialize counter.] Set K: = LB.
+2. Repeat Steps 3 and 4 while K := B.
+3.	 [Visit element.] Apply PROCESS to LA[K].
+4. 	 [Increase counter.] Set K := K + 1.
+    [End of Step 2 loop.]
+5. Exit.
 
 */
 
