@@ -23,12 +23,12 @@ int INDEX(char* T, char* P){
             return i;
         }
     }
-    return 0;
+    return -1;
 }
 
 void REPLACE(char* T, char* P, char* Q){
     int pos = INDEX(T, P);
-    if(pos==0){
+    if(pos==-1){
         return;
     }
 
@@ -38,13 +38,13 @@ void REPLACE(char* T, char* P, char* Q){
     char temp[500];
     int k = 0;
 
-    for(int i=0; i<pos-1; i++){
+    for(int i=0; i<pos; i++){
         temp[k++] = T[i];
     }
     for(int j=0; j<lenQ; j++){
         temp[k++] = Q[j];
     }
-    for (int l=pos-1+lenP; l<lenT; l++){
+    for (int l=pos+lenP; l<lenT; l++){
         temp[k++] = T[l];
     }
     temp[k] = '\0';
@@ -65,7 +65,7 @@ int main()
     cin.getline(Q, 50);
     int K = INDEX(T, P);
 
-    while(K != 0){
+    while(K != -1){
         REPLACE(T, P, Q);
         K = INDEX(T, P);
     }
