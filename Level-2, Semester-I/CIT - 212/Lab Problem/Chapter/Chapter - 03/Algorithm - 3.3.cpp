@@ -14,9 +14,9 @@ int main()
     char T[100], P[100];
     int S, R, INDEX = 0;
 
-    cout<<"Enter length of Text (S):";
+    cout<<"Enter Text T:";
     cin.getline(T+1, 100);
-    cout<<"Enter length of Pattern (R):";
+    cout<<"Enter Pattern P:";
     cin.getline(P+1, 100);
     S = LENGTH(T+1);
     R = LENGTH(P+1);
@@ -44,8 +44,9 @@ int main()
 }
 
 
-// <------------- 0-based index --------------->
 /*
+// <------------- 0-based index --------------->
+
 #include <iostream>
 using namespace std;
 
@@ -62,9 +63,9 @@ int main()
     char T[100], P[100];
     int S, R, INDEX = 0;
 
-    cout<<"Enter length of Text (S):";
+    cout<<"Enter Text T:";
     cin.getline(T, 100);
-    cout<<"Enter length of Pattern (R):";
+    cout<<"Enter Pattern P:";
     cin.getline(P, 100);
     S = LENGTH(T);
     R = LENGTH(P);
@@ -73,13 +74,13 @@ int main()
     int MAX = S - R;
     while(K<=MAX){
         int L;
-        for(L=1; L<=R; L++){
-            if (P[L]   !=   T[K+L-1]){
+        for(L=1; L<R; L++){
+            if (P[L]   !=   T[K+L]){
                 break;
             }
         }
-        if(L>R){
-            INDEX = K;
+        if(L==R){
+            INDEX = K + 1;
             cout<<"Pattern found at position: "<<INDEX<<endl;
             return 0;
         }
@@ -90,5 +91,4 @@ int main()
     cout<<"Pattern not found. INDEX = "<<INDEX<<endl;
     return 0;
 }
-
 */
