@@ -23,7 +23,7 @@ int INDEX(char* T, char* P){
             return i;
         }
     }
-    return 0;
+    return -1;
 }
 
 void DELETE(char* T, int pos, int len){
@@ -47,7 +47,7 @@ int main()
 
     int K = INDEX(T, P);
 
-    while(K != 0){
+    while(K != -1){
         DELETE(T, K, LENGTH(P));
         K = INDEX(T, P);
     }
