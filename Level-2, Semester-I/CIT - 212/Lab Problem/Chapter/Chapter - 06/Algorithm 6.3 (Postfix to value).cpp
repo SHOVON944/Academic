@@ -70,7 +70,6 @@ int EvalutePostfix(char P[]){
     return VALUE;
 }
 
-
 int main()
 {
     char P[100];
