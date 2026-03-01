@@ -21,7 +21,6 @@ void POP(int STACK[], int &TOP, int &ITEM){
     TOP = TOP - 1;
 }
 
-
 int EvalutePostfix(char P[]){
     int STACK[50];
     int TOP = -1;
