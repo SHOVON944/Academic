@@ -1,77 +1,55 @@
 #include <iostream>
 using namespace std;
 
-void PUSH(int STACK[], int MAXSTK, int &TOP, int ITEM){
-    if(TOP == MAXSTK-1){
-        cout<<"OVERFLOW"<<endl;
-        return;
-    }
-    TOP = TOP + 1;
-    STACK[TOP] = ITEM;
-    return;
-}
+#define NULLPTR -1
 
-void POP(int STACK[], int &TOP, int &ITEM){
-    if(TOP == -1){
-        cout<<"UNDERFLOW"<<endl;
+void Qinsert(int queue[],int n,int &front, int  &rear,int item){
+    if((front==1   &&   rear==n)  ||  (front==rear+1)){
         return;
     }
 
-    ITEM = STACK[TOP];
-    TOP = TOP - 1;
+    if(front==NULLPTR){
+        front = 0;
+        rear = 0;
+    } else if(rear==n-1){
+        rear==0;
+    } else{
+        rear = rear + 1;
+    }
+
+    queue[rear] = item;
 }
 
-int EvalutePostfix(char p[]){
-    int stack[40];
-    int top = -1;
-    int maxstk = 40;
-
-    char symbol;
-    int value, a, b;
-    int num;
-    int i = 0;
-
-    while(p[i] != '\0'){
-        i++;
+void display(int queue[], int n,int front, int  rear){
+    if(front==-1){
+        return;
     }
-    p[i] = ')';
-    p[i+1] = '\0';
-
-    i = 0;
-    while((symbol=p[i]) != ')'){
-        if(symbol>='0'  && symbol<='9'){
-            num = 0;
-            while(p[i]>='0'  && p[i]<='9'){
-                num = num*10 + (p[i] - '0');
-                i++;
-            }
-            PUSH(stack, maxstk, top, num);
-        } else if(p[i]==' '){
-            i++;
-        } else{
-            POP(stack, top, a);
-            POP(stack, top, b);
-
-            if(p[i]=='+') value = b + a;
-            if(p[i]=='-') value = b - a;
-            if(p[i]=='*') value = b * a;
-            if(p[i]=='/') value = b / a;
-
-            PUSH(stack, maxstk, top, value);
-            i++;
+    if(front<=rear){
+        for(int i=front; i<=rear; i++){
+            cout<<queue[i]<<" ";
+        }
+    } else{
+        for(int i=front; i<n; i++){
+            cout<<queue[i]<<" ";
+        }
+        for(int i=0; i<rear; i++){
+            cout<<queue[i]<<" ";
         }
     }
-
-    POP(stack, top, value);
-    return value;
+    cout<<endl;
 }
 
 int main()
 {
-    char P[100];
-    cin.getline(P, 100);
-    cout<<EvalutePostfix(P)<<endl;
-
+    int n = 5;
+    int queue[5];
+    int front = NULLPTR;
+    int rear = NULLPTR;
+    int item = 20;
+    Qinsert(queue, n, front, rear, item);
+    Qinsert(queue, n, front, rear, 30);
+    Qinsert(queue, n, front, rear, 40);
+    display(queue, n, front, rear);
 
     return 0;
 }
