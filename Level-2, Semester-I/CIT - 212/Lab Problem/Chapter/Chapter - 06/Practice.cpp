@@ -1,86 +1,77 @@
 #include <iostream>
 using namespace std;
 
-#define MAX 100
-
-void QUICK(int A[], int N, int BEG, int END, int &LOC){
-    int LEFT = BEG;
-    int RIGHT = END;
-    LOC = BEG;
-
-    while(true){
-        while(A[LOC]<=A[RIGHT]   &&   LOC != RIGHT){
-            RIGHT--;
-        }
-        if(LOC==RIGHT) return;
-        if(A[LOC] > A[RIGHT]){
-            int temp = A[LOC];
-            A[LOC] = A[RIGHT];
-            A[RIGHT] = temp;
-            LOC = RIGHT;
-        }
-
-        while(A[LEFT]<=A[LOC]   &&   LEFT != LOC){
-            LEFT++;
-        }
-
-        if(LOC==LEFT) return;
-        if(A[LEFT] > A[LOC]){
-            int temp = A[LOC];
-            A[LOC] = A[LEFT];
-            A[LEFT] = temp;
-            LOC = LEFT;
-        }
+void PUSH(int STACK[], int MAXSTK, int &TOP, int ITEM){
+    if(TOP == MAXSTK-1){
+        cout<<"OVERFLOW"<<endl;
+        return;
     }
+    TOP = TOP + 1;
+    STACK[TOP] = ITEM;
+    return;
 }
 
-void QUICKSORT(int A[], int N){
-    int LOWER[MAX], UPPER[MAX];
-    int TOP = 0;   // NULL = 0 
-    int BEG, END, LOC;
-
-    if(N>1){
-        TOP = TOP + 1;
-        LOWER[TOP] = 0;
-        UPPER[TOP] = N - 1;
+void POP(int STACK[], int &TOP, int &ITEM){
+    if(TOP == -1){
+        cout<<"UNDERFLOW"<<endl;
+        return;
     }
 
-    while(TOP!=0){
-        BEG = LOWER[TOP];
-        END = UPPER[TOP];
-        TOP = TOP - 1;
-
-        QUICK(A, N, BEG, END, LOC);
-
-        if(BEG < LOC-1){
-            TOP = TOP + 1;
-            LOWER[TOP] = BEG;
-            UPPER[TOP] = LOC - 1;
-        }
-
-        if(LOC+1 < END){
-            TOP = TOP + 1;
-            LOWER[TOP] = LOC + 1;
-            UPPER[TOP] = END;
-        }
-    }
+    ITEM = STACK[TOP];
+    TOP = TOP - 1;
 }
 
-int main(){
-    int A[] = {77, 44, 33, 11, 55, 0, 90, 40, 60, 99, 22};
-    int N = sizeof(A)/ sizeof(A[0]);
+int EvalutePostfix(char p[]){
+    int stack[40];
+    int top = -1;
+    int maxstk = 40;
 
-    cout<<"Original Array:\n";
-    for(int i=0; i<N; i++){
-        cout<<A[i]<<" ";
+    char symbol;
+    int value, a, b;
+    int num;
+    int i = 0;
+
+    while(p[i] != '\0'){
+        i++;
+    }
+    p[i] = ')';
+    p[i+1] = '\0';
+
+    i = 0;
+    while((symbol=p[i]) != ')'){
+        if(symbol>='0'  && symbol<='9'){
+            num = 0;
+            while(p[i]>='0'  && p[i]<='9'){
+                num = num*10 + (p[i] - '0');
+                i++;
+            }
+            PUSH(stack, maxstk, top, num);
+        } else if(p[i]==' '){
+            i++;
+        } else{
+            POP(stack, top, a);
+            POP(stack, top, b);
+
+            if(p[i]=='+') value = b + a;
+            if(p[i]=='-') value = b - a;
+            if(p[i]=='*') value = b * a;
+            if(p[i]=='/') value = b / a;
+
+            PUSH(stack, maxstk, top, value);
+            i++;
+        }
     }
 
-    QUICKSORT(A, N);
+    POP(stack, top, value);
+    return value;
+}
 
-    cout<<"\n\nSorted Array:\n";
-    for(int i=0; i<N; i++){
-        cout<<A[i]<<" ";
-    }
+int main()
+{
+    char P[100];
+    cin.getline(P, 100);
+    cout<<EvalutePostfix(P)<<endl;
+
 
     return 0;
 }
