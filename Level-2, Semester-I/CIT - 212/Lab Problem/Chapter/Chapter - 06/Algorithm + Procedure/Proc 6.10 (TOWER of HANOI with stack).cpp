@@ -5,9 +5,13 @@ using namespace std;
 
 int STN[MAX];
 char STBEG[MAX], STAUX[MAX], STEND[MAX];
-int TOP = NULL;
+int TOP = -1;
 
 void PUSH(int N, char BEG, char AUX, char END){
+    if(TOP >= MAX-1){
+        cout << "Stack Overflow!" << endl;
+        return;
+    }
     TOP = TOP + 1;
     STN[TOP] = N;
     STBEG[TOP] = BEG;
@@ -16,6 +20,10 @@ void PUSH(int N, char BEG, char AUX, char END){
 }
 
 void POP(int &N, char &BEG, char &AUX, char &END){
+    if(TOP >= MAX-1){
+        cout << "Stack Overflow!" << endl;
+        return;
+    }
     N = STN[TOP];
     BEG = STBEG[TOP];
     AUX = STAUX[TOP];
