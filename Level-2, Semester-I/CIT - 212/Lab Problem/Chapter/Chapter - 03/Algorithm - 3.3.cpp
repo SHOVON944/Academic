@@ -75,7 +75,7 @@ int main()
     while(K<=MAX){
         int L;
         for(L=1; L<R; L++){
-            if (P[L]   !=   T[K+L]){
+            if(P[L]   !=   T[K+L]){
                 break;
             }
         }
