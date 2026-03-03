@@ -34,9 +34,9 @@ void DISPLAY(int QUEUE[], int N, int FRONT, int REAR){
         for(int i=FRONT; i<=REAR; i++)
             cout<<QUEUE[i]<<" ";
     } else{
-        for(int i=FRONT; i<N; i++)
+        for(int i=FRONT; i<=N; i++)
             cout<<QUEUE[i]<<" ";
-        for(int i=0; i<=REAR; i++)
+        for(int i=1; i<=REAR; i++)
             cout<<QUEUE[i]<< " ";
     }
 
