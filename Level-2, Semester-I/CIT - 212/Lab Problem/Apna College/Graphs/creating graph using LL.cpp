@@ -6,27 +6,27 @@ public:
     int data;
     Node* next;
 
-    Node(int val) {
+    Node(int val){
         data = val;
         next = NULL;
     }
 };
 
 /* ---------- Linked List ---------- */
-class List {
+class List{
     Node* head;
     Node* tail;
 
 public:
-    List() {
+    List(){
         head = tail = NULL;
     }
 
     // insert at end
-    void push_back(int val) {
+    void push_back(int val){
         Node* newNode = new Node(val);
 
-        if (head == NULL) {
+        if(head == NULL){
             head = tail = newNode;
             return;
         }
@@ -36,16 +36,16 @@ public:
     }
 
     // print list
-    void print() {
+    void print(){
         Node* temp = head;
-        while (temp != NULL) {
+        while(temp != NULL){
             cout << temp->data << " ";
             temp = temp->next;
         }
     }
 };
 
-class Graph {
+class Graph{
     int V;
     List* adj;   // array of linked lists
 
