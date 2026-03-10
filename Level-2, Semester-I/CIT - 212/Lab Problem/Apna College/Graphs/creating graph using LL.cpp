@@ -50,18 +50,18 @@ class Graph{
     List* adj;   // array of linked lists
 
 public:
-    Graph(int V) {
+    Graph(int V){
         this->V = V;
         adj = new List[V];
     }
 
     // undirected graph
-    void addEdge(int u, int v) {
+    void addEdge(int u, int v){
         adj[u].push_back(v);
         adj[v].push_back(u);
     }
 
-    void printAdjList() {
+    void printAdjList(){
         for (int i = 0; i < V; i++) {
             cout << i << ": ";
             adj[i].print();     //* adj[i].print() == print(&adj[i]), compliner er vitore emonvabe run hoi. print() function ta adj[i] obj er jnno colbe
