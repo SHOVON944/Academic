@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-/* ---------- Node for Linked List ---------- */
 class Node{
 public:
     int data;
@@ -13,7 +12,7 @@ public:
     }
 };
 
-/* ---------- Linked List ---------- */
+//*     Linked List
 class List{
     Node* head;
     Node* tail;
@@ -43,7 +42,6 @@ public:
         }
     }
 
-    // Optional: FIND function in adjacency list
     int FIND(int item){
         Node* PTR = head;
         int LOC = 1;
@@ -58,7 +56,7 @@ public:
     }
 };
 
-/* ---------- Graph using adjacency list ---------- */
+//*------ Graph using adjacency list
 class Graph{
     int V;       // number of vertices
     List* adj;   // array of linked lists
@@ -71,7 +69,7 @@ public:
 
     void addEdge(int u, int v){
         adj[u].push_back(v);
-        adj[v].push_back(u); // undirected graph
+        adj[v].push_back(u);
     }
 
     void printAdjList(){
@@ -82,45 +80,64 @@ public:
         }
     }
 
-    void findInAdj(int u, int item){
+    void findInAdj(int u, int item){        //! eita kono ekta vertex er value er jnno find..r all vertex er jnno value find nice...
         int loc = adj[u].FIND(item);
-        if(loc) cout << "Node " << item << " found at position " << loc << " in adjacency list of vertex " << u << endl;
-        else cout << "Node " << item << " not found in adjacency list of vertex " << u << endl;
+        if(loc){
+            cout << "Node " << item << " found at position " << loc << " in adjacency list of vertex " << u << endl;
+        } else{
+            cout << "Node " << item << " not found in adjacency list of vertex " << u << endl;
+        }
     }
 };
 
-/* ---------- Main ---------- */
-int main(){
+int main()
+{
     int V, E;
-    cout << "Enter number of vertices: ";
-    cin >> V;
-    cout << "Enter number of edges: ";
-    cin >> E;
+    cout<<"Enter number of vertices: ";
+    cin>>V;
+    cout<<"Enter number of edges: ";
+    cin>>E;
 
     Graph g(V);
 
-    cout << "Enter edges (u v) format (0-based index):" << endl;
+    cout<<"Enter edges (u v) format (0-based index):" << endl;
     for(int i = 0; i < E; i++){
         int u, v;
-        cin >> u >> v;
+        cin>>u>>v;
         g.addEdge(u, v);
     }
-
-    cout << "\nGraph adjacency list:\n";
+    cout<<"\nGraph adjacency list:\n";
     g.printAdjList();
-
-    // Optional: FIND node in adjacency list
-    char choice;
-    cout << "\nDo you want to find a node in adjacency list? (y/n): ";
-    cin >> choice;
-    if(choice == 'y' || choice == 'Y'){
-        int u, item;
-        cout << "Enter vertex u: ";
-        cin >> u;
-        cout << "Enter node to find: ";
-        cin >> item;
-        g.findInAdj(u, item);
-    }
+    int u, item;
+    cout << "Enter vertex u: ";
+    cin >> u;
+    cout << "Enter node to find: ";
+    cin >> item;
+    g.findInAdj(u, item);
 
     return 0;
 }
+
+
+
+
+
+
+/*
+    void findIndAdj(int item){
+        bool found = false;
+
+        for(int i=0;i<V;i++){
+            int loc = adj[i].FIND(item);
+
+            if(loc != 0){
+                cout<<"Node "<<item<<" found in adjacency list of vertex "<<i<<" at position "<<loc<<endl;
+                found = true;
+            }
+        }
+
+        if(!found){
+            cout<<"Node "<<item<<" not found in graph"<<endl;
+        }
+    }
+*/
