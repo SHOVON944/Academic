@@ -6,17 +6,17 @@ public:
     int data;
     Node* next;
 
-    Node(int val=0){
+    Node(int val){
         data = val;
         next = NULL;
     }
 };
 
-// ---------- Linked List for Graph ----------
+// -------- Linked List --------
 class List{
-    Node* head;    // START
+    Node* head;
     Node* tail;
-    Node* avail;   // AVAILN
+    Node* avail;
 
 public:
     List(){
@@ -24,31 +24,82 @@ public:
         avail = NULL;
     }
 
-    // Initial Free Node(Avail)
-    void initFreeList(int size){
-        for(int i=0;i<size;i++){
-            Node* temp = new Node();
-            temp->next = avail;
-            avail = temp;
+    void push_back(int val){
+        Node* newNode = new Node(val);
+
+        if(head == NULL){
+            head = tail = newNode;
+            return;
         }
+
+        tail->next = newNode;
+        tail = newNode;
     }
 
-    bool INSNODE(int N){
-        if(avail == NULL){
+    int FIND(int ITEM){
+        Node* PTR = head;
+        int pos = 1;
+
+        while(PTR != NULL){
+            if(PTR->data == ITEM){
+                return pos;
+            }
+            PTR = PTR->next;
+            pos++;
+        }
+
+        return -1;
+    }
+
+    bool DELETE_ITEM(int ITEM){
+
+        if(head == NULL){
             return false;
         }
-        // Remove node from AVAIL
-        Node* NEW = avail;
-        avail = avail->next;
-        NEW->next = head;
-        head = NEW;
-        NEW->data = N;
 
-        return true; // success
+        if(head->data == ITEM){
+            Node* PTR = head;
+            head = head->next;
+
+            PTR->next = avail;
+            avail = PTR;
+
+            return true;
+        }
+
+        Node* PREV = head;
+        Node* PTR = head->next;
+
+        while(PTR != NULL){
+
+            if(PTR->data == ITEM){
+
+                PREV->next = PTR->next;
+
+                PTR->next = avail;
+                avail = PTR;
+
+                return true;
+            }
+
+            PREV = PTR;
+            PTR = PTR->next;
+        }
+
+        return false;
+    }
+
+    Node* getHead(){
+        return head;
+    }
+
+    void setHead(Node* h){
+        head = h;
     }
 
     void print(){
         Node* temp = head;
+
         while(temp != NULL){
             cout<<temp->data<<" ";
             temp = temp->next;
@@ -56,33 +107,22 @@ public:
     }
 };
 
-// ------- Graph
+// -------- Graph --------
 class Graph{
+
     int V;
     List* adj;
 
 public:
+
     Graph(int V){
         this->V = V;
         adj = new List[V];
-
-        // Initialize AVAIL lists for each adjacency list
-        for(int i=0;i<V;i++){
-            adj[i].initFreeList(5); // 5 free nodes per list
-        }
     }
 
-    void addEdgeINSNODE(int u,int v){
-        bool FLAG = adj[u].INSNODE(v); // insert in adjacency list of u
-        if(!FLAG){
-            cout<<"Overflow! Cannot insert edge "<<u<<"->"<<v<<"\n";
-        }
-
-        // For undirected graph, also insert reverse
-        FLAG = adj[v].INSNODE(u);
-        if(!FLAG){
-            cout<<"Overflow! Cannot insert edge "<<v<<"->"<<u<<"\n";
-        }
+    void addEdge(int u,int v){
+        adj[u].push_back(v);
+        adj[v].push_back(u);
     }
 
     void printAdjList(){
@@ -92,42 +132,52 @@ public:
             cout<<endl;
         }
     }
-};
 
-int main()
-{
-    int V,E;       // nice creat input ase
-    cout<<"Enter number of vertices: ";
-    cin>>V;
-    Graph g(V);
-    cout<<"Enter number of edges: ";
-    cin>>E;
-    cout<<"Enter NO:"<<endl;
-    for(int i=0; i<E; i++){
-        int u,v;
-        cin>>u>>v;
-        g.addEdgeINSNODE(u,v);
+    // Procedure 8.9 DELNODE
+    void DELETE_NODE(int N){
+
+        if(N < 0 || N >= V){
+            cout<<"Node not found\n";
+            return;
+        }
+
+        // Step 3: delete edges ending at N
+        for(int i=0;i<V;i++){
+            adj[i].DELETE_ITEM(N);
+        }
+
+        // Step 4: clear adjacency list of N
+        adj[N].setHead(NULL);
+
+        cout<<"Node "<<N<<" deleted from graph\n";
     }
 
-    cout<<"Adjacency List after INSNODE insertions:"<<endl;
+};
+
+
+// -------- Main --------
+int main(){
+
+    Graph g(5);
+
+    g.addEdge(0,1);
+    g.addEdge(1,2);
+    g.addEdge(1,3);
+    g.addEdge(2,3);
+    g.addEdge(2,4);
+
+    cout<<"Adjacency List:\n";
+    g.printAdjList();
+
+    int N;
+
+    cout<<"\nEnter node to delete: ";
+    cin>>N;
+
+    g.DELETE_NODE(N);
+
+    cout<<"\nUpdated Graph:\n";
     g.printAdjList();
 
     return 0;
 }
-
-
-
-/*
-    Graph g(5);
-
-    g.addEdgeINSNODE(0, 1);
-    g.addEdgeINSNODE(1, 2);
-    g.addEdgeINSNODE(1, 3);
-    g.addEdgeINSNODE(2, 3);
-
-    g.printAdjList();
-    g.addEdgeINSNODE(2, 2);
-    g.addEdgeINSNODE(4, 1);
-    g.addEdgeINSNODE(1, 4);
-    g.addEdgeINSNODE(1, 4);
-*/
