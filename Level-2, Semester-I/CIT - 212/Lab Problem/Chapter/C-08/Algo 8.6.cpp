@@ -33,7 +33,7 @@ public:
         }
     }
 
-    bool INSNODE(int N){
+    bool INSNODE(){
         if(avail == NULL){
             return false;
         }
@@ -42,9 +42,8 @@ public:
         avail = avail->next;
         NEW->next = head;
         head = NEW;
-        NEW->data = N;
 
-        return true; // success
+        return true;
     }
 
     void print(){
@@ -72,16 +71,10 @@ public:
         }
     }
 
-    void addEdgeINSNODE(int u,int v){
-        bool FLAG = adj[u].INSNODE(v); // insert in adjacency list of u
+    void insertNode(int u){
+        bool FLAG = adj[u].INSNODE();
         if(!FLAG){
-            cout<<"Overflow! Cannot insert edge "<<u<<"->"<<v<<"\n";
-        }
-
-        // For undirected graph, also insert reverse
-        FLAG = adj[v].INSNODE(u);
-        if(!FLAG){
-            cout<<"Overflow! Cannot insert edge "<<v<<"->"<<u<<"\n";
+            cout<<"Overflow! Cannot insert node in list "<<u<<endl;
         }
     }
 
@@ -96,38 +89,24 @@ public:
 
 int main()
 {
-    int V,E;       // nice creat input ase
-    cout<<"Enter number of vertices: ";
+    int V;
+    cout<<"Enter number of lists(vertices): ";
     cin>>V;
+
     Graph g(V);
-    cout<<"Enter number of edges: ";
-    cin>>E;
-    cout<<"Enter edges (u v):"<<endl;
-    for(int i=0; i<E; i++){
-        int u,v;
-        cin>>u>>v;
-        g.addEdgeINSNODE(u,v);
+
+    int n;
+    cout<<"How many nodes to insert in each list: ";
+    cin>>n;
+
+    for(int i=0;i<V;i++){
+        for(int j=0;j<n;j++){
+            g.insertNode(i);
+        }
     }
 
-    cout<<"Adjacency List after INSNODE insertions:"<<endl;
+    cout<<endl<<"After Node Insertions:"<<endl;
     g.printAdjList();
 
     return 0;
 }
-
-
-
-/*
-    Graph g(5);
-
-    g.addEdgeINSNODE(0, 1);
-    g.addEdgeINSNODE(1, 2);
-    g.addEdgeINSNODE(1, 3);
-    g.addEdgeINSNODE(2, 3);
-
-    g.printAdjList();
-    g.addEdgeINSNODE(2, 2);
-    g.addEdgeINSNODE(4, 1);
-    g.addEdgeINSNODE(1, 4);
-    g.addEdgeINSNODE(1, 4);
-*/
