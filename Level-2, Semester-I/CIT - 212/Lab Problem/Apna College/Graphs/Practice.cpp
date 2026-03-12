@@ -1,183 +1,60 @@
 #include<iostream>
+#include<vector>
+#include<list>
+#include<queue>
 using namespace std;
 
-class Node{
-public:
-    int data;
-    Node* next;
 
-    Node(int val){
-        data = val;
-        next = NULL;
-    }
-};
+int primMST(int V, vector<vector<pair<int, int>>> &adj){
+    vector<bool> inMST(V, false);
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>>pq;
+    int mstCost = 0;
+    pq.push({0, 0}); // {wt, vertex}
+    while(pq.size()>0){
+        auto p = pq.top();
+        int wt = p.first;
+        int u = p.second;
+        pq.pop();
 
-// -------- Linked List --------
-class List{
-    Node* head;
-    Node* tail;
-    Node* avail;
+        if(!inMST[u]){
+            inMST[u] = true;
+            mstCost += wt;
 
-public:
-    List(){
-        head = tail = NULL;
-        avail = NULL;
-    }
+            for(int i=0; i<adj[u].size(); i++){
+                int v = adj[u][i].first;
+                int w = adj[u][i].second;
 
-    void push_back(int val){
-        Node* newNode = new Node(val);
-
-        if(head == NULL){
-            head = tail = newNode;
-            return;
-        }
-
-        tail->next = newNode;
-        tail = newNode;
-    }
-
-    int FIND(int ITEM){
-        Node* PTR = head;
-        int pos = 1;
-
-        while(PTR != NULL){
-            if(PTR->data == ITEM){
-                return pos;
+                pq.push({w, v});
             }
-            PTR = PTR->next;
-            pos++;
-        }
-
-        return -1;
-    }
-
-    bool DELETE_ITEM(int ITEM){
-
-        if(head == NULL){
-            return false;
-        }
-
-        if(head->data == ITEM){
-            Node* PTR = head;
-            head = head->next;
-
-            PTR->next = avail;
-            avail = PTR;
-
-            return true;
-        }
-
-        Node* PREV = head;
-        Node* PTR = head->next;
-
-        while(PTR != NULL){
-
-            if(PTR->data == ITEM){
-
-                PREV->next = PTR->next;
-
-                PTR->next = avail;
-                avail = PTR;
-
-                return true;
-            }
-
-            PREV = PTR;
-            PTR = PTR->next;
-        }
-
-        return false;
-    }
-
-    Node* getHead(){
-        return head;
-    }
-
-    void setHead(Node* h){
-        head = h;
-    }
-
-    void print(){
-        Node* temp = head;
-
-        while(temp != NULL){
-            cout<<temp->data<<" ";
-            temp = temp->next;
-        }
-    }
-};
-
-// -------- Graph --------
-class Graph{
-
-    int V;
-    List* adj;
-
-public:
-
-    Graph(int V){
-        this->V = V;
-        adj = new List[V];
-    }
-
-    void addEdge(int u,int v){
-        adj[u].push_back(v);
-        adj[v].push_back(u);
-    }
-
-    void printAdjList(){
-        for(int i=0;i<V;i++){
-            cout<<i<<": ";
-            adj[i].print();
-            cout<<endl;
         }
     }
 
-    // Procedure 8.9 DELNODE
-    void DELETE_NODE(int N){
-
-        if(N < 0 || N >= V){
-            cout<<"Node not found\n";
-            return;
-        }
-
-        // Step 3: delete edges ending at N
-        for(int i=0;i<V;i++){
-            adj[i].DELETE_ITEM(N);
-        }
-
-        // Step 4: clear adjacency list of N
-        adj[N].setHead(NULL);
-
-        cout<<"Node "<<N<<" deleted from graph\n";
-    }
-
-};
+    return mstCost;
+}
 
 
-// -------- Main --------
-int main(){
+int main()
+{
+    int V = 4;
+    vector<vector<pair<int, int>>> adj(V);
 
-    Graph g(5);
+    // Undirected weighted graph
+    adj[0].push_back({1, 10}); //V, wt
+    adj[1].push_back({0, 10}); //U, wt
 
-    g.addEdge(0,1);
-    g.addEdge(1,2);
-    g.addEdge(1,3);
-    g.addEdge(2,3);
-    g.addEdge(2,4);
+    adj[0].push_back({3, 30});
+    adj[3].push_back({0, 30});
 
-    cout<<"Adjacency List:\n";
-    g.printAdjList();
+    adj[0].push_back({2, 15});
+    adj[2].push_back({0, 15});
 
-    int N;
+    adj[1].push_back({3, 40});
+    adj[3].push_back({1, 40});
 
-    cout<<"\nEnter node to delete: ";
-    cin>>N;
+    adj[2].push_back({3, 50});
+    adj[3].push_back({2, 50});
 
-    g.DELETE_NODE(N);
-
-    cout<<"\nUpdated Graph:\n";
-    g.printAdjList();
+    cout << "Minimum cost of MST = " << primMST(V, adj) << endl;
 
     return 0;
 }
