@@ -1,25 +1,23 @@
 #include <iostream>
 using namespace std;
 
-// -------- Edge Node for Priority Queue --------
-class EdgeNode{
+// -------- Edge Node --------
+class Edge{
 public:
-    int u;
-    int v;
-    int weight;
-    EdgeNode* link;
+    int u,v,w;
+    Edge* next;
 
-    EdgeNode(int uu, int vv, int w){
+    Edge(int uu,int vv,int ww){
         u = uu;
         v = vv;
-        weight = w;
-        link = NULL;
+        w = ww;
+        next = NULL;
     }
 };
 
-// Priority Queue for edges
+// -------- Edge Priority Queue (Sorted Linked List) --------
 class EdgePQ{
-    EdgeNode* start;
+    Edge* start;
 
 public:
     EdgePQ(){
@@ -27,25 +25,28 @@ public:
     }
 
     void push(int u,int v,int w){
-        EdgeNode* newNode = new EdgeNode(u,v,w);
-        if(start == NULL || w < start->weight){
-            newNode->link = start;
+        Edge* newNode = new Edge(u,v,w);
+
+        if(start == NULL || w < start->w){
+            newNode->next = start;
             start = newNode;
             return;
         }
 
-        EdgeNode* ptr = start;
-        while(ptr->link != NULL && ptr->link->weight <= w){
-            ptr = ptr->link;
+        Edge* temp = start;
+        while(temp->next != NULL && temp->next->w <= w){
+            temp = temp->next;
         }
-        newNode->link = ptr->link;
-        ptr->link = newNode;
+
+        newNode->next = temp->next;
+        temp->next = newNode;
     }
 
-    EdgeNode* pop(){
+    Edge* pop(){
         if(start == NULL) return NULL;
-        EdgeNode* temp = start;
-        start = start->link;
+
+        Edge* temp = start;
+        start = start->next;
         return temp;
     }
 
@@ -54,81 +55,112 @@ public:
     }
 };
 
-// -------- Disjoint Set (Union-Find) --------
+// -------- Disjoint Set --------
 class DisjointSet{
 public:
-    int parent[100];   // assume max 100 vertices
+    int parent[100];
+    int rank[100];
 };
 
-int find(DisjointSet* ds, int i){
-    while(ds->parent[i] != i){
-        i = ds->parent[i];
+// find function
+int findParent(DisjointSet &ds,int node){
+
+    if(ds.parent[node] == node){
+        return node;
     }
-    return i;
+
+    return ds.parent[node] = findParent(ds, ds.parent[node]);
 }
 
-void Union(DisjointSet* ds, int a, int b){
-    int rootA = find(ds,a);
-    int rootB = find(ds,b);
-    ds->parent[rootB] = rootA;
+// union function
+void unionSet(DisjointSet &ds,int u,int v){
+
+    int rootU = findParent(ds,u);
+    int rootV = findParent(ds,v);
+
+    if(ds.rank[rootU] < ds.rank[rootV]){
+        ds.parent[rootU] = rootV;
+    }
+
+    else if(ds.rank[rootV] < ds.rank[rootU]){
+        ds.parent[rootV] = rootU;
+    }
+
+    else{
+        ds.parent[rootV] = rootU;
+        ds.rank[rootU]++;
+    }
 }
 
-// -------- Graph (Adjacency list optional for reference) --------
+// -------- Graph Class --------
 class Graph{
+
     int V;
+    EdgePQ pq;
 
 public:
-    Graph(int v){ V = v; }
 
-    int kruskalMST(EdgePQ &pq){
+    Graph(int v){
+        V = v;
+    }
+
+    void addEdge(int u,int v,int w){
+        pq.push(u,v,w);
+    }
+
+    int kruskalMST(){
+
         DisjointSet ds;
-        for(int i=0;i<V;i++) ds.parent[i] = i;
 
-        int mstCost = 0;
+        for(int i=0;i<V;i++){
+            ds.parent[i] = i;
+            ds.rank[i] = 0;
+        }
+
+        int cost = 0;
         int edgeCount = 0;
 
-        cout << "Edges in MST:\n";
+        cout<<"Edges in MST:"<<endl;
 
         while(!pq.empty() && edgeCount < V-1){
-            EdgeNode* e = pq.pop();
+
+            Edge* e = pq.pop();
+
             int u = e->u;
             int v = e->v;
-            int w = e->weight;
+            int w = e->w;
 
-            int setU = find(&ds,u);
-            int setV = find(&ds,v);
+            int setU = findParent(ds,u);
+            int setV = findParent(ds,v);
 
             if(setU != setV){
-                cout << u << " - " << v << " : " << w << endl;
-                mstCost += w;
-                Union(&ds,setU,setV);
+
+                cout<<u<<" - "<<v<<" : "<<w<<endl;
+
+                cost += w;
+
+                unionSet(ds,setU,setV);
+
                 edgeCount++;
             }
         }
 
-        return mstCost;
+        return cost;
     }
 };
 
 // -------- Main --------
 int main(){
 
-    int V = 4;
+    Graph g(4);
 
-    EdgePQ pq;
+    g.addEdge(0,1,10);
+    g.addEdge(0,3,30);
+    g.addEdge(0,2,15);
+    g.addEdge(1,3,40);
+    g.addEdge(2,3,50);
 
-    // Insert edges
-    pq.push(0,1,10);
-    pq.push(0,3,30);
-    pq.push(0,2,15);
-    pq.push(1,3,40);
-    pq.push(2,3,50);
-
-    Graph g(V);
-
-    int cost = g.kruskalMST(pq);
-
-    cout << "Minimum Cost = " << cost << endl;
+    cout<<"Minimum Cost = "<<g.kruskalMST();
 
     return 0;
 }
