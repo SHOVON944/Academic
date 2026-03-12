@@ -1,7 +1,6 @@
 #include <iostream>
 using namespace std;
 
-/* ---------- Node ---------- */
 class Node{
 public:
     int data;
@@ -13,7 +12,7 @@ public:
     }
 };
 
-/* ---------- Linked List ---------- */
+// -------- LL
 class List{
     Node* head;
     Node* tail;
@@ -135,7 +134,7 @@ public:
     }
 };
 
-/* ---------- Graph ---------- */
+// ----- Graph
 class Graph{
     int V;
     List* adj;        // adjacency list
@@ -168,11 +167,10 @@ public:
 
     // BFS Traversal
     void BFS(int src){
-    for(int i =0; i<V; i++){
-        visited[i] = false;
-    }
+        for(int i =0; i<V; i++){
+            visited[i] = false;
+        }
         Queue q;
-
         q.push(src);
         visited[src] = true;
 
@@ -195,7 +193,6 @@ public:
     }
 };
 
-/* ---------- Main ---------- */
 int main(){
     Graph g(5);
 
@@ -205,11 +202,17 @@ int main(){
     g.addEdge(2, 3);
     g.addEdge(2, 4);
 
-    cout<<"Adjacency List: ";
+    cout<<"Adjacency List: "<<endl;
     g.printAdjList();
 
-    cout<<"\nBFS Traversal: ";
+    cout<<endl<<"BFS Traversal: ";
     g.BFS(0);   // user input er somoi head value pass hobe eikhan theke
 
     return 0;
 }
+
+/*
+                    ----4
+0-------    -------2
+        ---1     -----3
+*/
