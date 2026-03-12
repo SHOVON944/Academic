@@ -193,7 +193,8 @@ public:
     }
 };
 
-int main(){
+int main()
+{
     Graph g(5);
 
     g.addEdge(0, 1);
@@ -211,8 +212,36 @@ int main(){
     return 0;
 }
 
+//* Example
 /*
                     ----4
 0-------    -------2
         ---1     -----3
+*/
+
+
+/*
+int main()
+{
+    int V,E;
+    cout<<"Enter number of vertices: ";
+    cin>>V;
+    Graph g(V);
+    cout<<"Enter number of edges: ";
+    cin>>E;
+    cout<<"Enter edges (u v):"<<endl;
+    for(int i=0; i<E; i++){
+        int u,v;
+        cin>>u>>v;
+        g.addEdge(u,v);
+    }
+    g.printAdjList();
+    int src;
+    cout<<"Enter BFS starting vertex: ";
+    cin>>src;
+    cout<<endl<<"BFS Traversal: ";
+    g.BFS(src);
+
+    return 0;
+}
 */
