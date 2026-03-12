@@ -1,65 +1,89 @@
-#include <algorithm>
+/*
+███████╗██╗  ██╗ ██████╗ ██╗   ██╗ ██████╗ ███╗   ██╗
+██╔════╝██║  ██║██╔═══██╗██║   ██║██╔═══██╗████╗  ██║
+███████╗███████║██║   ██║██║   ██║██║   ██║██╔██╗ ██║
+╚════██║██╔══██║██║   ██║╚██╗ ██╔╝██║   ██║██║╚██╗██║
+███████║██║  ██║╚██████╔╝ ╚████╔╝ ╚██████╔╝██║ ╚████║
+╚══════╝╚═╝  ╚═╝ ╚═════╝   ╚═══╝   ╚═════╝ ╚═╝  ╚═══╝
+*/
+
+#include <iostream>
 #include <vector>
+#include <list>
+#include <queue>
+#include <climits>
 using namespace std;
 
-bool cmp(vector<int> &a, vector<int> &b) {
-    return a[2] < b[2];
-}
+class Edge {
+public:
+    int v;  // destination vertex
+    int wt; // weight of the edge
+    
+    // Constructor
+    Edge(int v, int wt) {
+        this->v = v;
+        this->wt = wt;
+    }
+};
 
-void makeSet(vector<int> &parent, vector<int> &rank, int n) {
-    for(int i=0; i<n; i++) {
-        parent[i] = i;
-        rank[i] = 0;
-    }
-}
+void dijkstra(int src, vector<vector<Edge>>g, int V){
+    vector<int> dist(V, INT_MAX);
+    dist[src] = 0;
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>> >pq;
+    // <dist[u], v>
 
-int findParent(vector<int> &parent, int node) {
-    if(parent[node] == node) {
-        return node;
-    }
-    return parent[node] = findParent(parent, parent[node]);
-}
+    pq.push({0, src});
+    while(pq.size()>0){
+        int u = pq.top().second;
+        pq.pop();
 
-void unionSet(int u, int v, vector<int> &parent, vector<int> &rank) {
-    u = findParent(parent, u);
-    v = findParent(parent, v);
-    
-    if(rank[u] < rank[v]) {
-        parent[u] = v;
-    }
-    else if(rank[v] < rank[u]) {
-        parent[v] = u;
-    }
-    else {
-        parent[v] = u;
-        rank[u]++;
-    }
-}
-
-int minimumSpanningTree(vector<vector<int>>& edges, int n) {
-    // Sort edges by weight (ascending)
-    sort(edges.begin(), edges.end(), cmp);
-    
-    vector<int> parent(n);
-    vector<int> rank(n);
-    
-    // Initialize each node as its own parent (disjoint sets)
-    makeSet(parent, rank, n);
-    
-    int minWeight = 0;
-    
-    // Process edges in ascending order of weight
-    for(int i=0; i<edges.size(); i++) {
-        int u = findParent(parent, edges[i][0]);
-        int v = findParent(parent, edges[i][1]);
-        int wt = edges[i][2];
-        
-        // If adding this edge doesn't create a cycle
-        if(u != v) {
-            minWeight += wt;
-            unionSet(u, v, parent, rank);
+        for(Edge e : g[u]){     // edge relaxiton
+            if(dist[e.v] >  dist[u] + e.wt){
+                dist[e.v] =  dist[u] + e.wt;
+                pq.push({dist[e.v], e.v});
+            }
         }
     }
+
+    for(int i=0; i<V; i++){
+        cout<<dist[i]<<" ";
+    }
+    cout<<endl;
+}
+
+
+
+int main() {
+    int V = 6; // Number of vertices
+    vector<vector<Edge>> g(V);
     
-    return minWeight;
+    // Building the graph (undirected weighted graph)
+    // Format: g[u].push_back(Edge(v, weight));
+    
+    g[0].push_back(Edge(1, 2));
+    g[0].push_back(Edge(2, 4));
+    
+    g[1].push_back(Edge(0, 2)); // Add reverse edge for undirected graph
+    g[1].push_back(Edge(2, 1));
+    g[1].push_back(Edge(3, 7));
+    
+    g[2].push_back(Edge(0, 4)); // Add reverse edge
+    g[2].push_back(Edge(1, 1));
+    g[2].push_back(Edge(4, 3));
+    
+    g[3].push_back(Edge(1, 7));
+    g[3].push_back(Edge(5, 1));
+    
+    g[4].push_back(Edge(2, 3));
+    g[4].push_back(Edge(3, 2));
+    g[4].push_back(Edge(5, 5));
+    
+    g[5].push_back(Edge(3, 1)); // Add reverse edge
+    g[5].push_back(Edge(4, 5));
+    
+    // Run Dijkstra's algorithm from source vertex 0
+    cout << "Running Dijkstra's Algorithm from source vertex 0:" << endl;
+    dijkstra(0, g, V);
+    
+    return 0;
 }
