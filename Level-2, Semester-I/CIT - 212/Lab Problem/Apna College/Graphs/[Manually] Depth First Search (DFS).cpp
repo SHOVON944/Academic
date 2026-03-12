@@ -56,6 +56,7 @@ public:
     //     delete temp;
     // }
 
+
     // void pop_back(){    // while(temp->next->next!=NULL), eita empty(), 1 value er jnno work korbe na...2/2+ value er jnno work korbe
     //     if(head==NULL){
     //         cout<<"LL is empty"<<endl;
@@ -171,8 +172,9 @@ public:
     void DFS(int src){
         bool* visit = new bool[V];
 
-        for(int i=0; i<V; i++)
+        for(int i=0; i<V; i++){
             visit[i] = false;
+        }
 
         DFS_Helper(src, visit);
         cout<<endl;
@@ -186,6 +188,14 @@ public:
 */
         // delete[] visit;
     }
+
+    void printAdjList(){
+        for (int i = 0; i < V; i++) {
+            cout << i << ": ";
+            adj[i].print();
+            cout << endl;
+        }
+    }
 };
 
 int main()
@@ -196,8 +206,9 @@ int main()
     g.addEdge(1, 2);
     g.addEdge(1, 3);
     g.addEdge(2, 4);
+    g.printAdjList();
 
-    cout<<"DFS: ";
+    cout<<endl<<"DFS: ";
     g.DFS(0);
 
     return 0;
