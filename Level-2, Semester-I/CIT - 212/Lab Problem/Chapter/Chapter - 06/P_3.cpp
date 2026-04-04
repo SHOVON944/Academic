@@ -18,7 +18,6 @@ int LINEAR(int DATA[], int N, int ITEM, int &count){
         return LOC;
 }
 
-
 // Binary Search with iteration count
 int BINARY(int DATA[], int LB, int UB, int ITEM, int &count){
     int BEG = LB, END = UB, MID;
