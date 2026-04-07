@@ -1,73 +1,51 @@
 #include <iostream>
 using namespace std;
 
-#define NULLPTR -1
+int main() {
+    int INFO[10], LINK[10];
+    int START, ITEM, LOC, PTR, n;
 
-void Qinsert(int queue[],int n,int &front, int  &rear,int item){
-    if((front==1   &&   rear==n)  ||  (front==rear+1)){
-        return;
+    // Input
+    cout << "Enter number of nodes: ";
+    cin >> n;
+
+    cout << "Enter INFO values:\n";
+    for(int i = 0; i < n; i++) {
+        cin >> INFO[i];
     }
 
-    if(front==NULLPTR){
-        front = 0;
-        rear = 0;
-    } else if(rear==n-1){
-        rear=0;
-    } else{
-        rear = rear + 1;
+    cout << "Enter LINK values (-1 for NULL):\n";
+    for(int i = 0; i < n; i++) {
+        cin >> LINK[i];
     }
 
-    queue[rear] = item;
-}
+    cout << "Enter START index: ";
+    cin >> START;
 
-void display(int queue[], int n,int front, int  rear){
-    if(front==-1){
-        return;
-    }
-    if(front<=rear){
-        for(int i=front; i<=rear; i++){
-            cout<<queue[i]<<" ";
+    cout << "Enter ITEM to search: ";
+    cin >> ITEM;
+
+    // Algorithm 5.2 শুরু
+    PTR = START;
+
+    while (PTR != -1) {
+        if (INFO[PTR] == ITEM) {
+            LOC = PTR;
+            break;
         }
-    } else{
-        for(int i=front; i<n; i++){
-            cout<<queue[i]<<" ";
-        }
-        for(int i=0; i<rear; i++){
-            cout<<queue[i]<<" ";
+        else {
+            PTR = LINK[PTR];
         }
     }
-    cout<<endl;
-}
 
-void QDELETE(int queue[], int n, int &front, int &rear, int &item){
-    if(front==NULLPTR) return;
+    if (PTR == -1)
+        LOC = -1;
 
-    item = queue[front];
-    if(front == rear){
-        front = NULLPTR;
-        rear = NULLPTR;
-    } else if(front==n-1){
-        front = 0;
-    } else{
-        front = front + 1;
-    }
-}
-
-int main()
-{
-    int n = 5;
-    int queue[5];
-    int front = NULLPTR;
-    int rear = NULLPTR;
-    int item = 20;
-    Qinsert(queue, n, front, rear, item);
-    Qinsert(queue, n, front, rear, 30);
-    Qinsert(queue, n, front, rear, 40);
-    int ITEM;
-
-    display(queue, n, front, rear);
-    QDELETE(queue, n, front, rear, ITEM);
-    cout<<ITEM<<endl;
+    // Output
+    if (LOC != -1)
+        cout << "Item found at index: " << LOC << endl;
+    else
+        cout << "Item not found\n";
 
     return 0;
 }
