@@ -7,6 +7,7 @@
 ╚══════╝╚═╝  ╚═╝ ╚═════╝   ╚═══╝   ╚═════╝ ╚═╝  ╚═══╝
 */
 
+
 #include <iostream>
 using namespace std;
 
@@ -14,29 +15,44 @@ const int NULL_PTR = 0;
 const int MAX = 100;
 
 
-void PREORD(char INFO[], int LEFT[], int RIGHT[], int ROOT){
+void POSTORD(char INFO[], int LEFT[], int RIGHT[], int ROOT){
     int STACK[MAX];
     int TOP, PTR;
 
     TOP = 1;
-    STACK[TOP] = NULL_PTR;
+    STACK[1] = NULL_PTR;
     PTR = ROOT;
 
-    while(PTR != NULL_PTR){
-        cout<<INFO[PTR]<<" ";
-        if(RIGHT[PTR] != NULL_PTR){
+    while(true){
+        while(PTR != NULL_PTR){
             TOP = TOP + 1;
-            STACK[TOP] = RIGHT[PTR];
+            STACK[TOP] = PTR;
+
+            if(RIGHT[PTR] != NULL_PTR){
+                TOP = TOP + 1;
+                STACK[TOP] = -RIGHT[PTR];
+            }
+
+            PTR = LEFT[PTR];
         }
 
-        if(LEFT[PTR] != NULL_PTR){
-            PTR = LEFT[PTR];
-        } else{
+        PTR = STACK[TOP];
+        TOP = TOP - 1;
+
+        while(PTR > 0){
+            cout<<INFO[PTR]<<" ";
             PTR = STACK[TOP];
             TOP = TOP - 1;
         }
+
+        if(PTR < 0){
+            PTR = -PTR;
+        } else{
+            break;
+        }
     }
 }
+
 
 int main()
 {
@@ -51,7 +67,7 @@ int main()
     //    / \
     //   D   E
 
-    // Preorder Traversal: A B D E C
+    // Preorder Inorder: D E B C A
 
     ROOT = 1;
 
@@ -61,8 +77,8 @@ int main()
     INFO[4] = 'D'; LEFT[4] = 0; RIGHT[4] = 0;
     INFO[5] = 'E'; LEFT[5] = 0; RIGHT[5] = 0;
 
-    cout << "Preorder Traversal: ";
-    PREORD(INFO, LEFT, RIGHT, ROOT);
+    cout << "Postorder Traversal: ";
+    POSTORD(INFO, LEFT, RIGHT, ROOT);
 
     return 0;
 }
@@ -82,7 +98,7 @@ int main()
     Node 5 -> E 0 0
 
 *Output:
-    Preorder Traversal: A B D E C
+    Preorder Postorder: D E B C A
 
 
 int main()
@@ -104,8 +120,8 @@ int main()
         cin >> INFO[i] >> LEFT[i] >> RIGHT[i];
     }
 
-    cout << "Preorder Traversal: ";
-    PREORD(INFO, LEFT, RIGHT, ROOT);
+    cout << "Postorder Traversal: ";
+    POSTORD(INFO, LEFT, RIGHT, ROOT);
 
     return 0;
 }

@@ -7,6 +7,7 @@
 ╚══════╝╚═╝  ╚═╝ ╚═════╝   ╚═══╝   ╚═════╝ ╚═╝  ╚═══╝
 */
 
+
 #include <iostream>
 using namespace std;
 
@@ -14,29 +15,43 @@ const int NULL_PTR = 0;
 const int MAX = 100;
 
 
-void PREORD(char INFO[], int LEFT[], int RIGHT[], int ROOT){
+void INORD(char INFO[], int LEFT[], int RIGHT[], int ROOT){
     int STACK[MAX];
     int TOP, PTR;
 
     TOP = 1;
-    STACK[TOP] = NULL_PTR;
+    STACK[1] = NULL_PTR;
     PTR = ROOT;
 
     while(PTR != NULL_PTR){
-        cout<<INFO[PTR]<<" ";
-        if(RIGHT[PTR] != NULL_PTR){
-            TOP = TOP + 1;
-            STACK[TOP] = RIGHT[PTR];
-        }
+        TOP = TOP + 1;
+        STACK[TOP] = PTR;
+        PTR = LEFT[PTR];
+    }
 
-        if(LEFT[PTR] != NULL_PTR){
-            PTR = LEFT[PTR];
+    PTR = STACK[TOP];
+    TOP = TOP - 1;
+    while(PTR != NULL_PTR){
+        cout<<INFO[PTR]<<" ";
+
+        if(RIGHT[PTR] != NULL_PTR){
+            PTR = RIGHT[PTR];
+
+            while(PTR != NULL_PTR){
+                TOP = TOP + 1;
+                STACK[TOP] = PTR;
+                PTR = LEFT[PTR];
+            }
+
+            PTR = STACK[TOP];
+            TOP = TOP - 1;
         } else{
             PTR = STACK[TOP];
             TOP = TOP - 1;
         }
     }
 }
+
 
 int main()
 {
@@ -51,7 +66,7 @@ int main()
     //    / \
     //   D   E
 
-    // Preorder Traversal: A B D E C
+    // Preorder Inorder: D B E A C
 
     ROOT = 1;
 
@@ -61,8 +76,8 @@ int main()
     INFO[4] = 'D'; LEFT[4] = 0; RIGHT[4] = 0;
     INFO[5] = 'E'; LEFT[5] = 0; RIGHT[5] = 0;
 
-    cout << "Preorder Traversal: ";
-    PREORD(INFO, LEFT, RIGHT, ROOT);
+    cout << "Inorder Traversal: ";
+    INORD(INFO, LEFT, RIGHT, ROOT);
 
     return 0;
 }
@@ -82,7 +97,7 @@ int main()
     Node 5 -> E 0 0
 
 *Output:
-    Preorder Traversal: A B D E C
+    Preorder Inorder: D B E A C
 
 
 int main()
@@ -104,8 +119,8 @@ int main()
         cin >> INFO[i] >> LEFT[i] >> RIGHT[i];
     }
 
-    cout << "Preorder Traversal: ";
-    PREORD(INFO, LEFT, RIGHT, ROOT);
+    cout << "Inorder Traversal: ";
+    INORD(INFO, LEFT, RIGHT, ROOT);
 
     return 0;
 }
