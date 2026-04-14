@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 
-// ---- Edge Node
+// ---- Edge Node 
 class Edge{
 public:
     int u,v,w;
