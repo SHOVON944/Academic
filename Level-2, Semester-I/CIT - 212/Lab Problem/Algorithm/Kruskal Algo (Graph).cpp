@@ -92,7 +92,7 @@ void unionSet(DisjointSet &ds,int u,int v){
     }
 }
 
-// ------ Graph Class
+// ----- Graph Class
 class Graph{
     int V;
     EdgePQ pq;
