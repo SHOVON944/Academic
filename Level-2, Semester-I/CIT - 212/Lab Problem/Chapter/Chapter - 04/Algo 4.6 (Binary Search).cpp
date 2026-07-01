@@ -21,6 +21,7 @@ Set BEG:=LBBEG:=LB, END:=UBEND:=UB and MID:=INT((BEG+END)/2)MID:=INT((BEG+END)/2
 
 */
 
+
 #include <iostream>
 using namespace std;
 
@@ -49,21 +50,25 @@ int main()
     int DATA[100];
     int LB, UB, ITEM, LOC;
 
+    cout << "Enter the lower bound (LB): ";
     cin>>LB;
+    cout << "Enter the upper bound (UB): ";
     cin>>UB;
 
+    cout << "Enter " << (UB - LB + 1) << " elements of the array (must be sorted): ";
     for(int i=LB; i<=UB; i++){
         cin>>DATA[i];
     }
 
+    cout << "Enter the value (ITEM) to search: ";
     cin>>ITEM;
 
     BINARY(DATA, LB, UB, ITEM, LOC);
 
     if(LOC != -1){
-        cout<<LOC;
+        cout << "Search Result: ITEM found at location LOC = " << LOC << endl;
     } else{
-        cout<<"NULL";
+        cout << "Search Result: ITEM not found, LOC = NULL" << endl;
     }
 
     return 0;

@@ -32,15 +32,21 @@ int main()
     int A[100][100], B[100][100], C[100][100];
     int M, P, N;
 
-    cin>>M>>P;
+    cout << "Enter the number of rows of matrix A (M): ";
+    cin>>M;
+    cout << "Enter the number of columns of matrix A / rows of matrix B (P): ";
+    cin>>P;
+    cout << "Enter the number of columns of matrix B (N): ";
     cin>>N;
 
+    cout << "Enter the elements of matrix A (" << M << " x " << P << "):\n";
     for(int I=1; I<=M; I++){
         for(int K=1; K<=P; K++){
             cin>>A[I][K];
         }
     }
 
+    cout << "Enter the elements of matrix B (" << P << " x " << N << "):\n";
     for(int K=1; K<=P; K++){
         for(int J=1; J<=N; J++){
             cin>>B[K][J];
@@ -49,6 +55,7 @@ int main()
 
     MATMUL(A, B, C, M, P, N);
 
+    cout << "\nThe resultant matrix C (A x B) is:\n";
     for(int I=1; I<=M; I++){
         for(int J=1; J<=N; J++){
             cout<<C[I][J]<<" ";

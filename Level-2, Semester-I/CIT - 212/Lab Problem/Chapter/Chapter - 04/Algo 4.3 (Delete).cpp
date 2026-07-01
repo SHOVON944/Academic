@@ -9,7 +9,6 @@
 * 3. [Reset N.] Set N := N - 1.
 * 4. Exit.
 */
-
 #include <iostream>
 using namespace std;
 
@@ -25,15 +24,24 @@ int main()
 {
     int LA[100];
     int N, K, ITEM;
+
+    cout << "Enter the number of elements (N): ";
     cin>>N;
+
+    cout << "Enter " << N << " elements of the array: ";
     for(int i=1; i<=N; i++) cin >> LA[i];
 
+    cout << "Enter the position (K) of the element you want to delete: ";
     cin >> K;
+
     DELETE(LA, N, K, ITEM);
-    cout<<ITEM<<endl;
+
+    cout << "\nThe deleted value is: " << ITEM << endl;
+    cout << "After deletion, the array is:\n";
     for(int i=1; i<=N;i++){
         cout<<LA[i]<<" ";
     }
+    cout << endl;
 
     return 0;
 }

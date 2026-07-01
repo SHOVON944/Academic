@@ -21,6 +21,120 @@ void POLISH(string Q){
     stack<char> STACK;
     string P;
 
+    // step 1: Push '(' onto STACK and add ')' to end of Q
+    STACK.push('(');
+    Q = Q + ')';
+
+    // step 2: scan Q [left -> right]
+    for(int i=0; i<Q.length(); i++){
+        char ch = Q[i];
+
+        if(isALphabateDigit(ch)){    // Step 3: operand -> add to P
+            P = P + ch;
+        } else if(ch=='('){     // Step 4: left parenthesis -> push
+            STACK.push(ch);
+        } else if(ch=='*' || ch=='/' || ch=='^' || ch=='+' || ch=='-'){ // Step 5
+            // '^' is right-associative, so don't pop another '^'
+            while(precedence(STACK.top()) > precedence(ch)   ||
+                 (precedence(STACK.top()) == precedence(ch) && ch != '^')){
+                P = P + STACK.top();
+                STACK.pop();
+            }
+            STACK.push(ch);
+        } else if(ch==')'){  // Step 6
+            while(STACK.top()!='('){
+                P = P + STACK.top();
+                STACK.pop();
+            }
+            STACK.pop();
+        }
+    }
+    cout << "The Postfix Expression is: " << P << endl;
+}
+
+
+int main()
+{
+    string Q;
+    cout << "Enter the infix expression: ";
+    cin >> Q;
+
+    POLISH(Q);
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+
+#include<bits/stdc++.h>
+#include<stack>
+#include<string>
+using namespace std;
+
+bool isALphabateDigit(char ch){
+    if(ch>='A'  &&  'Z'>=ch) return true;
+    if(ch>='a'  &&  'z'>=ch) return true;
+    if(ch>='0'  &&  '9'>=ch) return true;
+    return false;
+}
+
+int precedence(char x){
+    if(x=='+' || x=='-') return 1;
+    if(x=='*' || x=='/') return 2;
+    if(x=='^') return 3;
+    return 0;
+}
+
+void POLISH(string Q){
+    stack<char> STACK;
+    string P;
+
     //TODO  step 1: Push '(' onto STACK and add ')' to end of Q
     STACK.push('(');
     Q = Q + ')';
@@ -60,3 +174,5 @@ int main()
 
     return 0;
 }
+
+*/

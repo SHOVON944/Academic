@@ -10,36 +10,27 @@
 *[Reset N.] Set N := N + 1.
 *Exit.
 */
-
 #include <iostream>
 using namespace std;
-
-void INSERT(int LA[], int &N, int K, int ITEM){
-    int J = N;
-    while(J>=K){
-        LA[J + 1] = LA[J];
-        J = J - 1;
-    }
-
-    LA[K] = ITEM;
-    N = N + 1;
-}
 
 int main()
 {
     int LA[100];
-    int N, K, ITEM;
+    int LB, UB;
 
-    cin>>N;
-    for(int i = 1; i <= N; i++) cin>>LA[i];
+    cout << "Enter the lower bound (LB): ";
+    cin >> LB;
+    cout << "Enter the upper bound (UB): ";
+    cin >> UB;
 
-    cin>>K;
-    cin>>ITEM;
+    cout << "Enter " << (UB - LB + 1) << " elements of the array: ";
+    for(int i=LB; i<=UB; i++){
+        cin>>LA[i];
+    }
 
-    INSERT(LA, N, K, ITEM);
-
-    for(int i = 1; i <= N; i++){
-        cout<<LA[i]<<" ";
+    cout << "\nThe array elements are:\n";
+    for(int L=LB; L<=UB; L++){
+        cout << "LA[" << L << "] = " << LA[L] << endl;
     }
 
     return 0;

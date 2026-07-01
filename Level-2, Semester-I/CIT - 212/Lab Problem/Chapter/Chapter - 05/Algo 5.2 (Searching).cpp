@@ -3,14 +3,12 @@ using namespace std;
 
 #define NULLPTR 0
 
-void SEARCH(int INFO[], int LINK[], int START, int ITEM, int &LOC)
-{
+void SEARCH(int INFO[], int LINK[], int START, int ITEM, int &LOC){
     int PTR;
 
     PTR = START;
 
-    while(PTR != NULLPTR)
-    {
+    while(PTR != NULLPTR){
         if(INFO[PTR] == ITEM)
         {
             LOC = PTR;

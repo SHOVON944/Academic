@@ -27,9 +27,9 @@ void LINEAR(int DATA[], int N, int ITEM){
     }
 
     if(LOC == N+1){
-        cout << "Unsuccessful";
+        cout << "Search Result: Unsuccessful (item not found)" << endl;
     } else{
-        cout<<LOC;
+        cout << "Search Result: ITEM found at location LOC = " << LOC << endl;
     }
 }
 
@@ -37,10 +37,16 @@ int main()
 {
     int DATA[102];
     int N, ITEM;
+
+    cout << "Enter the number of elements (N): ";
     cin>>N;
 
+    cout << "Enter " << N << " elements of the array: ";
     for(int i=1; i<=N; i++) cin>>DATA[i];
+
+    cout << "Enter the value (ITEM) to search: ";
     cin>>ITEM;
+
     LINEAR(DATA, N, ITEM);
 
     return 0;

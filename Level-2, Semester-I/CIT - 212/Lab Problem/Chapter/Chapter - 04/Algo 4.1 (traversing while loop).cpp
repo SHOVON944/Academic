@@ -8,7 +8,6 @@ Algorithm 4.1: Traversing a Linear Array) Here LA is a linear array with lower b
 5. Exit.
 
 */
-
 #include <iostream>
 using namespace std;
 
@@ -16,17 +15,24 @@ int main()
 {
     int LA[100];
     int LB, UB;
-    cin>>LB;
-    cin>>UB;
+
+    cout << "Enter the lower bound (LB): ";
+    cin >> LB;
+    cout << "Enter the upper bound (UB): ";
+    cin >> UB;
+
+    cout << "Enter " << (UB - LB + 1) << " elements of the array: ";
     for(int i=LB; i<=UB; i++){
         cin>>LA[i];
     }
 
     int K = LB;
+    cout << "\nThe array elements are: ";
     while(K<=UB){
         cout<<LA[K]<<" ";
         K = K + 1;
     }
+    cout << endl;
 
     return 0;
 }

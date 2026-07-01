@@ -5,80 +5,63 @@ using namespace std;
 
 void QINSERT(int QUEUE[], int N, int &FRONT, int &REAR, int ITEM){
     if((FRONT==1  &&  REAR==N)   ||   (FRONT==REAR+1)){
-        cout<<"OVERFLOW"<<endl;
+        cout << "OVERFLOW" << endl;
         return;
     }
-
-    if(FRONT==NULLPTR){
-        FRONT = 1;
-        REAR  = 1;
-    } else if(REAR==N){
-        REAR = 1;
-    } else{
-        REAR = REAR + 1;
-    }
+    if(FRONT==NULLPTR){ FRONT = 1; REAR  = 1; }
+    else if(REAR==N){ REAR = 1; }
+    else{ REAR = REAR + 1; }
 
     QUEUE[REAR] = ITEM;
 }
 
 void QDELETE(int QUEUE[], int N, int &FRONT, int &REAR, int &ITEM){
-    if(FRONT==NULLPTR){
-        cout<<"UNDERFLOW"<<endl;
-        return;
-    }
+    if(FRONT==NULLPTR){ cout << "UNDERFLOW" << endl; return; }
 
     ITEM = QUEUE[FRONT];
 
-    if(FRONT==REAR){
-        FRONT = NULLPTR;
-        REAR  = NULLPTR;
-    } else if (FRONT == N){
-        FRONT = 1;
-    } else{
-        FRONT = FRONT + 1;
-    }
+    if(FRONT==REAR){ FRONT = NULLPTR; REAR  = NULLPTR; }
+    else if (FRONT == N){ FRONT = 1; }
+    else{ FRONT = FRONT + 1; }
 }
 
 void DISPLAY(int QUEUE[], int N, int FRONT, int REAR){
-    if(FRONT==NULLPTR){
-        cout<<"Queue is empty"<<endl;
-        return;
-    }
+    if(FRONT==NULLPTR){ cout << "The Queue is empty." << endl; return; }
 
-    cout<<"Queue elements: ";
-
+    cout << "The Queue elements are: ";
     if(FRONT<=REAR){
-        for(int i=FRONT; i<=REAR; i++)
-            cout<<QUEUE[i]<<" ";
+        for(int i=FRONT; i<=REAR; i++) cout << QUEUE[i] << " ";
     } else{
-        for(int i=FRONT; i<=N; i++)
-            cout<<QUEUE[i]<<" ";
-        for(int i=1; i<=REAR; i++)
-            cout<<QUEUE[i]<<" ";
+        for(int i=FRONT; i<=N; i++) cout << QUEUE[i] << " ";
+        for(int i=1; i<=REAR; i++) cout << QUEUE[i] << " ";
     }
-
-    cout<<endl;
+    cout << endl;
 }
 
 int main()
 {
-    int N = 5;
-    int QUEUE[6]; // 1-based indexing
+    int N;
+    cout << "Enter the size of the queue: ";
+    cin >> N;
+
+    int QUEUE[N+1];
     int FRONT = NULLPTR;
     int REAR  = NULLPTR;
-    int ITEM;
+    int ITEM, k;
 
-    QINSERT(QUEUE, N, FRONT, REAR, 10);
-    QINSERT(QUEUE, N, FRONT, REAR, 20);
-    QINSERT(QUEUE, N, FRONT, REAR, 30);
+    cout << "Enter the number of items to insert: ";
+    cin >> k;
+
+    for(int i = 1; i <= k; i++){
+        cout << "Enter item " << i << ": ";
+        cin >> ITEM;
+        QINSERT(QUEUE, N, FRONT, REAR, ITEM);
+    }
+
     DISPLAY(QUEUE, N, FRONT, REAR);
 
     QDELETE(QUEUE, N, FRONT, REAR, ITEM);
-    cout<<"Deleted item: "<<ITEM<<endl;
-    DISPLAY(QUEUE, N, FRONT, REAR);
-
-    QINSERT(QUEUE, N, FRONT, REAR, 40);
-    QINSERT(QUEUE, N, FRONT, REAR, 50);
+    cout << "The deleted item is: " << ITEM << endl;
     DISPLAY(QUEUE, N, FRONT, REAR);
 
     return 0;

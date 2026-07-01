@@ -32,19 +32,23 @@ void BUBBLE(int DATA[], int N) {
 int main()
 {
     int N;
+    cout << "Enter the number of elements (N): ";
     cin>>N;
+
     int DATA[N];
+    cout << "Enter " << N << " elements of the array: ";
     for(int i=0; i<N; i++) cin>>DATA[i];
 
     BUBBLE(DATA, N);
 
+    cout << "\nAfter sorting (Bubble Sort), the array is:\n";
     for(int i=0; i<N; i++){
         cout<<DATA[i]<<" ";
     }
+    cout << endl;
 
     return 0;
 }
-
 //      <-----------EnD CoDe---------------->
 
 /*
